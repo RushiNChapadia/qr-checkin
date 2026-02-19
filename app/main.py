@@ -5,7 +5,7 @@ from sqlalchemy import text
 from app.api import api_router
 from app.core.config import settings
 from app.db.session import engine
-
+from fastapi.staticfiles import StaticFiles
 
 def create_app() -> FastAPI:
     app = FastAPI(title="QR Check-in API", version="0.1.0")
@@ -35,6 +35,9 @@ def create_app() -> FastAPI:
             return {"status": "not_ready"}
 
     app.include_router(api_router)
+
+    app.mount("/web", StaticFiles(directory="web", html=True), name="web")
+
     return app
 
 

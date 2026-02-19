@@ -10,6 +10,8 @@ from app.models.event import Event
 from app.models.user import User
 from app.schemas.event import EventCreate, EventListOut, EventOut
 
+from app.services.scanner_key import generate_scanner_key
+
 router = APIRouter(prefix="/events", tags=["events"])
 
 
@@ -24,6 +26,7 @@ def create_event(
         name=payload.name,
         venue=payload.venue,
         start_time=payload.start_time,
+        scanner_key=generate_scanner_key(),
     )
     db.add(event)
     db.commit()
